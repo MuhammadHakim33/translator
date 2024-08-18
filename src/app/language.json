@@ -1,0 +1,20 @@
+[
+  {"code": "ID","language": "Indonesian"},
+  {"code": "JV","language": "Javanese"},
+  {"code": "SND","language": "Sundanese"},
+  {"code": "MGK","language": "Minangkabau"},
+  {"code": "US","language": "English"},
+  {"code": "CN","language": "Mandarin"},
+  {"code": "JP","language": "Japanese"},
+  {"code": "FR","language": "French"},
+  {"code": "DE","language": "German"},
+  {"code": "IN","language": "Hindi"},
+  {"code": "ES","language": "Spanish"},
+  {"code": "BR","language": "Portuguese"},
+  {"code": "RU","language": "Russian"},
+  {"code": "KR","language": "Korean"},
+  {"code": "IT","language": "Italian"},
+  {"code": "GB","language": "English"},
+  {"code": "SA","language": "Arabic"},
+  {"code": "TR","language": "Turkish"}
+]
