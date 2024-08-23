@@ -3,7 +3,7 @@
   {"code": "JV","language": "Javanese"},
   {"code": "SND","language": "Sundanese"},
   {"code": "MGK","language": "Minangkabau"},
-  {"code": "US","language": "English"},
+  {"code": "US","language": "English US"},
   {"code": "CN","language": "Mandarin"},
   {"code": "JP","language": "Japanese"},
   {"code": "FR","language": "French"},
@@ -14,7 +14,7 @@
   {"code": "RU","language": "Russian"},
   {"code": "KR","language": "Korean"},
   {"code": "IT","language": "Italian"},
-  {"code": "GB","language": "English"},
+  {"code": "GB","language": "English British"},
   {"code": "SA","language": "Arabic"},
   {"code": "TR","language": "Turkish"}
 ]
