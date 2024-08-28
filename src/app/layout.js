@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import 'remixicon/fonts/remixicon.css'
 
 export const metadata = {
 	title: "Translator",

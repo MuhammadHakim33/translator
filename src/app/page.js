@@ -15,10 +15,19 @@ export default function Home() {
 		console.log(result);
 	};
 
+	function swap() {
+		let langTemp = langOrigin;
+		setLangOrigin(langdestination);
+		setLangdestination(langTemp);
+		let resultTemp = result;
+		setResult(sentance);
+		setSentance(resultTemp);
+	}
+
 	return (
 		<main className="container max-w-4xl mx-auto my-6">
-			<div className="columns-2">
-				<div>
+			<div className="flex gap-4">
+				<div className='flex-1'>
 					<select 
 					value={langOrigin} 
 					onChange={(e) => setLangOrigin(e.target.value)}
@@ -38,7 +47,12 @@ export default function Home() {
 					</textarea>
 					<button className="btn btn-sm btn-neutral mt-1" onClick={translate}>Translate</button>
 				</div>
-				<div>
+				<div className='flex-none'>
+					<button className="btn btn-sm btn-ghost mt-1" onClick={swap}>
+						<i className="ri-arrow-left-right-line"></i>
+					</button>
+				</div>
+				<div className='flex-1'>
 					<select 
 					value={langdestination} 
 					onChange={(e) => setLangdestination(e.target.value)}
