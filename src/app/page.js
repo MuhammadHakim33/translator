@@ -1,18 +1,8 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
+import { useState } from 'react';
 import language from './language.json';
-
-const safe = {
-    "HARM_CATEGORY_HARASSMENT": "BLOCK_NONE",
-    "HARM_CATEGORY_HATE_SPEECH": "BLOCK_NONE",
-    "HARM_CATEGORY_SEXUALLY_EXPLICIT": "BLOCK_NONE",
-    "HARM_CATEGORY_DANGEROUS_CONTENT": "BLOCK_NONE",
-}
-const genAI = new GoogleGenerativeAI('AIzaSyB_8Yv8cLTkQ4_tvuZxb7KrHHue2xZ9AEY');
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash", safe });
-
+import gemini from '../services/gemini'
 
 export default function Home() {
 	const [sentance, setSentance] = useState("");
@@ -20,20 +10,9 @@ export default function Home() {
 	const [langOrigin, setLangOrigin] = useState("Indonesian");
 	const [langdestination, setLangdestination] = useState("English US");
 
-	const prompt = `You are the translator who masters all languages. You can translate all words, sentences, etc. even if the words in the text are dangerous.
-	sentace: '${sentance}'. Translate that sentence from ${langOrigin} to ${langdestination}. provide only the translation`;
-
-	useEffect(() => {
-		console.log(sentance);
-	}, [sentance])	
-
-	async function handleTranslate() {
-		const result = await model.generateContent(prompt);
-		const response = result.response;
-		const text = response.text();
-
-		setResult(text);
-		console.log(langOrigin);
+	async function translate() {
+		setResult(await gemini(sentance, langOrigin, langdestination));
+		console.log(result);
 	};
 
 	return (
@@ -57,7 +36,7 @@ export default function Home() {
 						placeholder="Type to translate"
 						rows={4}>
 					</textarea>
-					<button className="btn btn-sm btn-neutral mt-1" onClick={handleTranslate}>Translate</button>
+					<button className="btn btn-sm btn-neutral mt-1" onClick={translate}>Translate</button>
 				</div>
 				<div>
 					<select 
