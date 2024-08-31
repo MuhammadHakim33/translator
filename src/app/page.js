@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import language from './language.json';
+import language from './libs/language.json';
 import gemini from '../services/gemini'
 
 export default function Home() {
@@ -11,6 +11,10 @@ export default function Home() {
 	const [langdestination, setLangdestination] = useState("English US");
 
 	async function translate() {
+		if (sentance == "") {
+			setResult("");
+			return;
+		}
 		setResult(await gemini(sentance, langOrigin, langdestination));
 		console.log(result);
 	};
@@ -25,49 +29,63 @@ export default function Home() {
 	}
 
 	return (
-		<main className="container max-w-4xl mx-auto my-6">
-			<div className="flex gap-4">
-				<div className='flex-1'>
+		<main className="max-w-4xl mx-4 md:mx-auto py-10">
+			<div className='border'>
+				<div className='flex justify-evenly bg-white px-2 py-2 border-b'>
 					<select 
-					value={langOrigin} 
-					onChange={(e) => setLangOrigin(e.target.value)}
-					className="select select-bordered select-sm mb-4">
-						{language.map((item) =>
-							item.language != langdestination && (
-								<option key={item.code} value={item.language}>{item.language}</option>
-							)
+						className="select-lang" 
+						value={langOrigin}
+						onChange={(e) => setLangOrigin(e.target.value)}
+					>
+						{language.map((item) => 
+							<option 
+								key={item.code} 
+								value={item.language}
+								disabled={item.language == langdestination && true}
+							>
+								{item.language}
+							</option>
 						)}
 					</select>
-					<textarea 
-						value={sentance} 
-						className="textarea textarea-bordered w-full" 
-						onChange={(e) => setSentance(e.target.value)} 
-						placeholder="Type to translate"
-						rows={4}>
-					</textarea>
-					<button className="btn btn-sm btn-neutral mt-1" onClick={translate}>Translate</button>
-				</div>
-				<div className='flex-none'>
-					<button className="btn btn-sm btn-ghost mt-1" onClick={swap}>
+					<button className="btn btn-sm btn-ghost btn-square" onClick={swap}>
 						<i className="ri-arrow-left-right-line"></i>
 					</button>
-				</div>
-				<div className='flex-1'>
 					<select 
-					value={langdestination} 
-					onChange={(e) => setLangdestination(e.target.value)}
-					className="select select-bordered select-sm mb-4">
+						className="select-lang" 
+						value={langdestination}
+						onChange={(e) => setLangdestination(e.target.value)}
+					>
 						{language.map((item) => 
-							item.language != langOrigin && (
-								<option key={item.code} value={item.language}>{item.language}</option>
-							)
+							<option 
+								key={item.code} 
+								value={item.language}
+								disabled={item.language == langOrigin && true}
+							>
+								{item.language}
+							</option>
 						)}
 					</select>
-					<textarea
-					value={result} 
-					className="textarea textarea-bordered w-full"
-					rows={4} readOnly>
-					</textarea>
+				</div>
+				<div className='flex justify-evenly flex-col md:flex-row'>
+					<div className='w-full relative'>
+						<textarea 
+							className='input-translate' 
+							placeholder='Type to translate' 
+							rows={10}
+							value={sentance}
+							onChange={(e) => setSentance(e.target.value)} 
+						></textarea>
+						<button className="btn-translate drop-shadow-xl" onClick={translate}>
+							<i className="ri-send-plane-2-line ri-xl text-white"></i>
+						</button>
+					</div>
+					<textarea 
+						className='output-translate'
+						placeholder='Translation' 
+						rows={10} 
+						readOnly={true}
+						value={result}
+					></textarea>
 				</div>
 			</div>
 		</main>

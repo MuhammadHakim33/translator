@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .select-lang {
+        @apply select select-sm focus:outline-none focus:border-none border-none;
+    }
+
+    .textarea {
+        @apply p-4 w-full rounded-none focus:outline-none text-base border-0;
+    }
+
+    .input-translate {
+        @apply textarea border-r;
+    }
+
+    .output-translate {
+        @apply textarea bg-neutral-100;
+    }
+
+    .btn-translate {
+        @apply btn btn-circle bg-[#006989] hover:bg-[#00546e] absolute bottom-4 right-4 ;
+    }
+}
