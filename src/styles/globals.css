@@ -8,15 +8,8 @@
     }
 
     .textarea {
-        @apply p-4 w-full rounded-none focus:outline-none text-base border-0;
-    }
-
-    .input-translate {
-        @apply textarea border-r;
-    }
-
-    .output-translate {
-        @apply textarea bg-neutral-100;
+        @apply p-4 w-full rounded-none focus:outline-none text-base border-0 bg-transparent;
+        resize: none;
     }
 
     .btn-translate {

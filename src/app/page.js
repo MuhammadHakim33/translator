@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import language from './libs/language.json';
 import gemini from '../services/gemini'
+import Textarea from './components/textarea';
 
 export default function Home() {
 	const [sentance, setSentance] = useState("");
@@ -67,25 +68,27 @@ export default function Home() {
 					</select>
 				</div>
 				<div className='flex justify-evenly flex-col md:flex-row'>
-					<div className='w-full relative'>
-						<textarea 
-							className='input-translate' 
+					<div className='flex-1 bg-white relative border-r'>
+						<Textarea 
+							className='textarea' 
 							placeholder='Type to translate' 
 							rows={10}
 							value={sentance}
 							onChange={(e) => setSentance(e.target.value)} 
-						></textarea>
+						/>
 						<button className="btn-translate drop-shadow-xl" onClick={translate}>
 							<i className="ri-send-plane-2-line ri-xl text-white"></i>
 						</button>
 					</div>
-					<textarea 
-						className='output-translate'
-						placeholder='Translation' 
-						rows={10} 
-						readOnly={true}
-						value={result}
-					></textarea>
+					<div className='flex-1 bg-neutral-100'>
+						<Textarea 
+							className='textarea' 
+							placeholder='Translation' 
+							rows={10}
+							value={result}
+							readOnly={true}
+						/>
+					</div>
 				</div>
 			</div>
 		</main>
