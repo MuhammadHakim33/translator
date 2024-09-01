@@ -19,7 +19,6 @@ export default function Home() {
 		setLoading(true);
 		setResult(await gemini(sentance, langOrigin, langdestination));
 		setLoading(false);
-		console.log(result);
 	};
 
 	function swap() {

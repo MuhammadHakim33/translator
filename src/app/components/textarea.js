@@ -4,7 +4,6 @@ export default function Textarea(props) {
     const textareaRef = useRef(null);
 
     useEffect(() => {
-		console.log(textareaRef.current.scrollHeight);
 		textareaRef.current.style.height = "280px";
 		textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
 	}, [props.value])
