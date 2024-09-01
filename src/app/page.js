@@ -14,7 +14,6 @@ export default function Home() {
 
 	async function translate() {
 		if (sentance == "") {
-			setResult("");
 			return;
 		}
 		setLoading(true);
@@ -25,15 +24,20 @@ export default function Home() {
 
 	function swap() {
 		let langTemp = langOrigin;
+		let resultTemp = result;
 		setLangOrigin(langdestination);
 		setLangdestination(langTemp);
-		let resultTemp = result;
 		setResult(sentance);
 		setSentance(resultTemp);
 	}
 
+	function clear() {
+		setSentance("");
+		setResult("");
+	}
+
 	return (
-		<main className="max-w-4xl mx-4 md:mx-auto py-10">
+		<main className='max-w-5xl mx-4 md:mx-auto py-10'>
 			<div className='border'>
 				<div className='flex justify-evenly bg-white px-2 py-2 border-b'>
 					<select 
@@ -51,8 +55,8 @@ export default function Home() {
 							</option>
 						)}
 					</select>
-					<button className="btn btn-sm btn-ghost btn-square" onClick={swap}>
-						<i className="ri-arrow-left-right-line"></i>
+					<button className="btn-swap" onClick={swap}>
+						<i className="ri-arrow-left-right-line ri-lg"></i>
 					</button>
 					<select 
 						className="select-lang" 
@@ -71,7 +75,7 @@ export default function Home() {
 					</select>
 				</div>
 				<div className='flex justify-evenly flex-col md:flex-row'>
-					<div className='flex-1 bg-white relative border-r'>
+					<div className='flex-1 flex bg-white relative border-r'>
 						<Textarea 
 							className='textarea' 
 							placeholder='Type to translate' 
@@ -79,9 +83,20 @@ export default function Home() {
 							value={sentance}
 							onChange={(e) => setSentance(e.target.value)} 
 						/>
-						<button className="btn-translate drop-shadow-xl" onClick={translate}>
-							<i className="ri-send-plane-2-line ri-xl text-white"></i>
-						</button>
+						<div className='flex flex-col gap-y-3 pt-4 pr-4'>
+							<button 
+								className="btn-translate" 
+								onClick={translate}
+								disabled={sentance == "" && true}
+							>
+								<i className="ri-send-plane-2-line text-white"></i>
+							</button>
+							{sentance != "" && 
+								<button className="btn-clear" onClick={clear}>
+									<i className="ri-close-large-line ri-lg"></i>
+								</button>
+							}
+						</div>
 					</div>
 					{loading ? 
 						<div className='flex-1 bg-neutral-100'>

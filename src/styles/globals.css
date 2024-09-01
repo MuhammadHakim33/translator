@@ -12,7 +12,13 @@
         resize: none;
     }
 
+    .btn-swap {
+        @apply btn btn-sm bg-transparent hover:bg-transparent border-none shadow-none;
+    }
     .btn-translate {
-        @apply btn btn-circle bg-[#006989] hover:bg-[#00546e] absolute bottom-4 right-4 ;
+        @apply btn btn-square rounded-full bg-black hover:bg-neutral-600 shadow-lg;
+    }
+    .btn-clear {
+        @apply btn btn-square rounded-full bg-transparent hover:bg-neutral-100 border-none shadow-none;
     }
 }
