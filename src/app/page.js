@@ -10,13 +10,16 @@ export default function Home() {
 	const [result, setResult] = useState("");
 	const [langOrigin, setLangOrigin] = useState("Indonesian");
 	const [langdestination, setLangdestination] = useState("English US");
+	const [loading, setLoading] = useState(false);
 
 	async function translate() {
 		if (sentance == "") {
 			setResult("");
 			return;
 		}
+		setLoading(true);
 		setResult(await gemini(sentance, langOrigin, langdestination));
+		setLoading(false);
 		console.log(result);
 	};
 
@@ -80,15 +83,24 @@ export default function Home() {
 							<i className="ri-send-plane-2-line ri-xl text-white"></i>
 						</button>
 					</div>
-					<div className='flex-1 bg-neutral-100'>
-						<Textarea 
-							className='textarea' 
-							placeholder='Translation' 
-							rows={10}
-							value={result}
-							readOnly={true}
-						/>
-					</div>
+					{loading ? 
+						<div className='flex-1 bg-neutral-100'>
+							<div className='p-4 animate-pulse space-y-2'>
+								<div className='h-4 bg-neutral-300 max-w-full'></div>
+								<div className='h-4 bg-neutral-300 max-w-64'></div>
+								<div className='h-4 bg-neutral-300 max-w-32'></div>
+							</div>
+						</div> :
+						<div className='flex-1 bg-neutral-100'>
+							<Textarea 
+								className='textarea' 
+								placeholder='Translation' 
+								rows={10}
+								value={result}
+								readOnly={true}
+							/>
+						</div>
+					}
 				</div>
 			</div>
 		</main>
