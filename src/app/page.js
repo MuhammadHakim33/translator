@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import language from './libs/language.json';
 import gemini from '../services/gemini'
 import Textarea from './components/textarea';
