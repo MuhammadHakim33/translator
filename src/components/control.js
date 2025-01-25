@@ -14,7 +14,7 @@ function Control() {
     const handleSwapLang = () => {
         console.log(langOrigin);
         let temp = langOrigin;
-        setLangOrigin(langOrigin);
+        setLangOrigin(langDestination);
 		setLangDestination(temp);
     }
 
@@ -25,7 +25,7 @@ function Control() {
                     items={language} 
                     itemSelected={langOrigin} 
                     setitemSelected={setLangOrigin}
-                    disabledKeys={[langDestination]} 
+                    disabledKeys={[langDestination]}
                 />
                 <Button isIconOnly aria-label="swap" onPress={handleSwapLang}>
                     <IconArrowLeftRightLine className='h-4 w-4' />

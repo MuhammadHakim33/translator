@@ -55,7 +55,7 @@ export default function Home() {
 						)}
 					</select>
 					<button className="btn-swap" onClick={swap}>
-						<i className="ri-arrow-left-right-line ri-lg"></i>
+						Ubah
 					</button>
 					<select 
 						className="select-lang" 

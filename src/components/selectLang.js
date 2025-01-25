@@ -13,13 +13,11 @@ function SelectLang({items, itemSelected, setitemSelected, ...props}) {
             className="max-w-xs"
             labelPlacement="outside"
             selectorIcon={<IconSelectorLine />}
-            defaultSelectedKeys={[itemSelected]}
+            selectedKeys={[itemSelected]}
             onChange={handleitemSelected}
             {...props}
         >
-            {(items) => (
-                <SelectItem key={items.language}>{items.language}</SelectItem>
-            )}
+            {(items) => <SelectItem key={items.language}>{items.language}</SelectItem>}
         </Select>
     )
 }
