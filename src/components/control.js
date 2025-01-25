@@ -2,8 +2,8 @@
 
 import {useState} from 'react';
 import {Card, CardBody} from "@heroui/react";
-import {Button} from "@heroui/button";
 import {IconArrowLeftRightLine} from "@/components/icons";
+import ButtonIcon from './buttonIcon';
 import SelectLang from './selectLang';
 import language from "@/libs/language.json";
 
@@ -12,7 +12,6 @@ function Control() {
 	const [langDestination, setLangDestination] = useState("English US");
 
     const handleSwapLang = () => {
-        console.log(langOrigin);
         let temp = langOrigin;
         setLangOrigin(langDestination);
 		setLangDestination(temp);
@@ -27,9 +26,9 @@ function Control() {
                     setitemSelected={setLangOrigin}
                     disabledKeys={[langDestination]}
                 />
-                <Button isIconOnly aria-label="swap" onPress={handleSwapLang}>
+                <ButtonIcon onPress={handleSwapLang}>
                     <IconArrowLeftRightLine className='h-4 w-4' />
-                </Button>
+                </ButtonIcon>
                 <SelectLang 
                     items={language} 
                     itemSelected={langDestination} 
