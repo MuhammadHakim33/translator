@@ -3,8 +3,8 @@
 import {useState} from 'react';
 import {Card, CardBody} from "@heroui/react";
 import {IconArrowLeftRightLine} from "@/components/icons";
-import ButtonIcon from './buttonIcon';
-import SelectLang from './selectLang';
+import ButtonIcon from './ButtonIcon';
+import SelectLang from './SelectLang';
 import language from "@/libs/language.json";
 
 function Control() {

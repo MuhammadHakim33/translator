@@ -1,7 +1,7 @@
 import {Card, CardBody} from "@heroui/react";
 import {IconSendLine} from "@/components/icons";
-import ButtonIcon from './buttonIcon';
-import TextareaInOut from "./textareaInOut";
+import ButtonIcon from './ButtonIcon';
+import TextareaInOut from "./TranslationBox";
 
 function InputOutput() {
     return (
