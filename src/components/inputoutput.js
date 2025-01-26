@@ -7,10 +7,8 @@ function InputOutput() {
     return (
         <Card>
             <CardBody className="flex-row justify-between gap-x-4">
-                <TextareaInOut 
-                    action={<ButtonIcon><IconSendLine className='h-4 w-4'/></ButtonIcon>} 
-                    placeholder="Type to translate" 
-                />
+                <TextareaInOut placeholder="Type to translate"/>
+                <ButtonIcon><IconSendLine className='h-4 w-4'/></ButtonIcon>
                 <TextareaInOut isReadOnly={true} placeholder="Translation"/>
             </CardBody>
         </Card>
