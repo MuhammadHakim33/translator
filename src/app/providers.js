@@ -2,13 +2,16 @@
 
 import {HeroUIProvider} from '@heroui/react';
 import {SentenceContextProvider} from "@/contexts/sentenceContext";
+import {LanguageContextProvider} from "@/contexts/languageContext";
 
 export function Providers({children}) {
     return (
         <SentenceContextProvider>
-            <HeroUIProvider>
-                {children}
-            </HeroUIProvider>
+            <LanguageContextProvider>
+                <HeroUIProvider>
+                    {children}
+                </HeroUIProvider>
+            </LanguageContextProvider>
         </SentenceContextProvider>
     )
 }

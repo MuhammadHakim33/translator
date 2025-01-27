@@ -2,22 +2,30 @@
 
 import {useState, useContext} from 'react';
 import {SentenceContext} from '@/contexts/sentenceContext';
+import {LanguageContext} from '@/contexts/languageContext';
 import CardWrapper from '@/components/CardWrapper';
 import SelectLang from '@/components/SelectLang';
 import ButtonIcon from '@/components/ButtonIcon';
 import TranslationBox from '@/components/TranslationBox';
 import {IconArrowLeftRightLine, IconSendLine} from '@/components/icons';
+import gemini from '@/services/gemini';
 import languages from '@/libs/languages.json';
 
 export default function Page() {
-    const [languageSource, setLanguageSource] = useState("Indonesian");
-	const [languageTarget, setLanguageTarget] = useState("English US");
+    const [translate, setTranslate] = useState("");
     const {sentence, setSentence} = useContext(SentenceContext);
+    const [{source, setSource}, {target, setTarget}] = useContext(LanguageContext);
+
+    const handleTranslate = async () => {
+        let result = await gemini(sentence, source, target);
+        setTranslate(result);
+        console.log(result);
+    }
 
     const handleSwapLang = () => {
-        let temp = languageSource;
-        setLanguageSource(languageTarget);
-		setLanguageTarget(temp);
+        let temp = source;
+        setSource(target);
+		setTarget(temp);
     }
 
     return (
@@ -25,27 +33,27 @@ export default function Page() {
             <CardWrapper className="flex-row justify-between">
                 <SelectLang
                     languages={languages} 
-                    languageSelected={languageSource} 
-                    setLanguageSelected={setLanguageSource}
-                    languageDisable={languageTarget}
+                    languageSelected={source} 
+                    setLanguageSelected={setSource}
+                    languageDisable={target}
                 />
                 <ButtonIcon onPress={handleSwapLang}>
                     <IconArrowLeftRightLine className='h-4 w-4' />
                 </ButtonIcon>
                 <SelectLang 
                     languages={languages} 
-                    languageSelected={languageTarget} 
-                    setLanguageSelected={setLanguageTarget} 
-                    languageDisable={languageSource} 
+                    languageSelected={target} 
+                    setLanguageSelected={setTarget} 
+                    languageDisable={source} 
                 />
             </CardWrapper>
             <CardWrapper className="flex-row justify-between gap-x-4">
                 <TranslationBox placeholder="Type to translate" setValue={setSentence}>
-                    <ButtonIcon size="sm" className={sentence?"absolute right-2 top-10":"hidden"}>
+                    <ButtonIcon onPress={handleTranslate} size="sm" className={sentence?"absolute right-2 top-2":"hidden"}>
                         <IconSendLine className='h-4 w-4'/>
                     </ButtonIcon>
                 </TranslationBox>
-                <TranslationBox placeholder="Translation" isReadOnly={true} />
+                <TranslationBox placeholder="Translation" value={translate} isReadOnly={true} />
             </CardWrapper>
         </main>
     )
