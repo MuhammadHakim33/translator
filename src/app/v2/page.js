@@ -7,36 +7,36 @@ import SelectLang from '@/components/SelectLang';
 import ButtonIcon from '@/components/ButtonIcon';
 import TranslationBox from '@/components/TranslationBox';
 import {IconArrowLeftRightLine, IconSendLine} from '@/components/icons';
-import language from '@/libs/language.json';
+import languages from '@/libs/languages.json';
 
 export default function Page() {
-    const [langOrigin, setLangOrigin] = useState("Indonesian");
-	const [langDestination, setLangDestination] = useState("English US");
+    const [languageSource, setLanguageSource] = useState("Indonesian");
+	const [languageTarget, setLanguageTarget] = useState("English US");
     const {sentence, setSentence} = useContext(SentenceContext);
 
     const handleSwapLang = () => {
-        let temp = langOrigin;
-        setLangOrigin(langDestination);
-		setLangDestination(temp);
+        let temp = languageSource;
+        setLanguageSource(languageTarget);
+		setLanguageTarget(temp);
     }
 
     return (
         <main className='max-w-5xl mx-4 md:mx-auto py-10 space-y-6'>
             <CardWrapper className="flex-row justify-between">
-                <SelectLang 
-                    items={language} 
-                    itemSelected={langOrigin} 
-                    setitemSelected={setLangOrigin}
-                    disabledKeys={[langDestination]}
+                <SelectLang
+                    languages={languages} 
+                    languageSelected={languageSource} 
+                    setLanguageSelected={setLanguageSource}
+                    languageDisable={languageTarget}
                 />
                 <ButtonIcon onPress={handleSwapLang}>
                     <IconArrowLeftRightLine className='h-4 w-4' />
                 </ButtonIcon>
                 <SelectLang 
-                    items={language} 
-                    itemSelected={langDestination} 
-                    setitemSelected={setLangDestination} 
-                    disabledKeys={[langOrigin]} 
+                    languages={languages} 
+                    languageSelected={languageTarget} 
+                    setLanguageSelected={setLanguageTarget} 
+                    languageDisable={languageSource} 
                 />
             </CardWrapper>
             <CardWrapper className="flex-row justify-between gap-x-4">

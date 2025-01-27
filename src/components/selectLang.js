@@ -1,21 +1,26 @@
 import {Select, SelectItem} from "@heroui/react";
 import {IconSelectorLine} from "@/components/icons";
 
-function SelectLang({items, itemSelected, setitemSelected, ...props}) {
+function SelectLang({
+    languages, 
+    languageSelected, 
+    setLanguageSelected, 
+    languageDisable
+}) {
 
-    const handleitemSelected = (e) => setitemSelected(e.target.value)
+    const handleLanguageSelected = (e) => setLanguageSelected(e.target.value);
 
     return (
         <Select
             aria-label="Select"
             disableSelectorIconRotation
-            items={items}
+            items={languages}
             className="max-w-xs"
             labelPlacement="outside"
             selectorIcon={<IconSelectorLine />}
-            selectedKeys={[itemSelected]}
-            onChange={handleitemSelected}
-            {...props}
+            selectedKeys={[languageSelected]}
+            onChange={handleLanguageSelected}
+            disabledKeys={[languageDisable]}
         >
             {(items) => <SelectItem key={items.language}>{items.language}</SelectItem>}
         </Select>
