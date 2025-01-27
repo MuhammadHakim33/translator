@@ -1,6 +1,7 @@
 "use client";
 
-import {useState} from 'react';
+import {useState, useContext} from 'react';
+import {SentenceContext} from '@/contexts/sentenceContext';
 import CardWrapper from '@/components/CardWrapper';
 import SelectLang from '@/components/SelectLang';
 import ButtonIcon from '@/components/ButtonIcon';
@@ -11,6 +12,7 @@ import language from '@/libs/language.json';
 export default function Page() {
     const [langOrigin, setLangOrigin] = useState("Indonesian");
 	const [langDestination, setLangDestination] = useState("English US");
+    const {sentence, setSentence} = useContext(SentenceContext);
 
     const handleSwapLang = () => {
         let temp = langOrigin;
@@ -38,8 +40,8 @@ export default function Page() {
                 />
             </CardWrapper>
             <CardWrapper className="flex-row justify-between gap-x-4">
-                <TranslationBox placeholder="Type to translate">
-                    <ButtonIcon size="sm" className="absolute right-2 top-10">
+                <TranslationBox placeholder="Type to translate" setValue={setSentence}>
+                    <ButtonIcon size="sm" className={sentence?"absolute right-2 top-10":"hidden"}>
                         <IconSendLine className='h-4 w-4'/>
                     </ButtonIcon>
                 </TranslationBox>
