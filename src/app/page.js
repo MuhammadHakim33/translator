@@ -9,34 +9,19 @@ import SelectLang from '@/components/SelectLang';
 import ButtonIcon from '@/components/ButtonIcon';
 import TranslationBox from '@/components/TranslationBox';
 import {IconArrowLeftRightLine, IconSendLine} from '@/components/icons';
-import gemini from '@/services/gemini';
 import languages from '@/libs/languages.json';
+import useTranslation from '@/hooks/useTranslation';
 
 export default function Page() {
-    const [isLoaded, setIsLoaded] = useState(true);
-    const [translate, setTranslate] = useState("");
     const {sentence, setSentence} = useContext(SentenceContext);
     const [{source, setSource}, {target, setTarget}] = useContext(LanguageContext);
-
-    const handleTranslate = async () => {
-        try {
-            setIsLoaded(false);
-            let result = await gemini(sentence, source, target);
-            setTranslate(result);
-        } 
-        catch (error) {
-            console.log(error);
-        } 
-        finally {
-            setIsLoaded(true);
-        }
-    }
+    const {isLoaded, translate, handleTranslate} = useTranslation();
 
     const handleSwapLanguage = () => {
         setSource((prevSource) => {
             setTarget(prevSource);
             return target;
-        })
+        });
     }
 
     return (
