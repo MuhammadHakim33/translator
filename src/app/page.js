@@ -2,6 +2,7 @@
 
 import {useContext} from 'react';
 import {Skeleton} from "@heroui/skeleton";
+import {Alert} from "@heroui/react";
 import {SentenceContext} from '@/contexts/sentenceContext';
 import {LanguageContext} from '@/contexts/languageContext';
 import CardWrapper from '@/components/CardWrapper';
@@ -15,7 +16,14 @@ import useTranslation from '@/hooks/useTranslation';
 export default function Page() {
     const {sentence, setSentence} = useContext(SentenceContext);
     const [{source, setSource}, {target, setTarget}] = useContext(LanguageContext);
-    const {isLoaded, translate, handleSwapLanguage, handleTranslate} = useTranslation();
+    const {
+        isLoaded, 
+        isError, 
+        setIsError, 
+        translate, 
+        handleSwapLanguage, 
+        handleTranslate
+    } = useTranslation();
 
     return (
         <main className='max-w-5xl mx-4 md:mx-auto py-10 space-y-6'>
@@ -36,6 +44,7 @@ export default function Page() {
                     languageDisable={source} 
                 />
             </CardWrapper>
+
             <CardWrapper className="flex-row justify-between gap-x-4">
                 <TranslationBox placeholder="Type to translate" value={sentence} setValue={setSentence}>
                     {sentence && (
@@ -48,6 +57,20 @@ export default function Page() {
                     <TranslationBox placeholder="Translation" value={translate} isReadOnly={true} />
                 </Skeleton>
             </CardWrapper>
+            
+            {isError && (
+                <Alert 
+                    hideIcon 
+                    isVisible={isError}
+                    color={"danger"} 
+                    title={`Sistem Error`}
+                    description={"Mohon coba lagi."}
+                    classNames={{
+                        base: "max-w-xs"
+                    }}
+                    onClose={() => setIsError(false)}
+                />
+            )}
         </main>
     )
 }

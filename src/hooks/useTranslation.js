@@ -5,6 +5,7 @@ import {LanguageContext} from '@/contexts/languageContext';
 
 export default function useTranslation() {
     const [isLoaded, setIsLoaded] = useState(true);
+    const [isError, setIsError] = useState(false);
     const [translate, setTranslate] = useState("");
     const {sentence, setSentence} = useContext(SentenceContext);
     const [{source, setSource}, {target, setTarget}] = useContext(LanguageContext);
@@ -12,10 +13,12 @@ export default function useTranslation() {
     const handleTranslate = async () => {
         try {
             setIsLoaded(false);
-            const result = await gemini(sentence, source, target);
-            setTranslate(result);
+            const response = await gemini(sentence, source, target);
+            setTranslate(response);
+            // console.log(response);
         } catch (error) {
-            console.error("Translation error:", error);
+            setIsError(true)
+            // console.error(error);
         } finally {
             setIsLoaded(true);
         }
@@ -31,5 +34,5 @@ export default function useTranslation() {
         setTranslate(previousSentence);
     }
   
-    return {isLoaded, translate, handleSwapLanguage, handleTranslate};
+    return {isLoaded, isError, setIsError, translate, handleSwapLanguage, handleTranslate};
 }
