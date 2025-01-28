@@ -1,122 +1,75 @@
 "use client";
 
-import { useState } from 'react';
-import language from './libs/language.json';
-import gemini from '../services/gemini'
-import Textarea from './components/textarea';
+import {useState, useContext} from 'react';
+import {Skeleton} from "@heroui/skeleton";
+import {SentenceContext} from '@/contexts/sentenceContext';
+import {LanguageContext} from '@/contexts/languageContext';
+import CardWrapper from '@/components/CardWrapper';
+import SelectLang from '@/components/SelectLang';
+import ButtonIcon from '@/components/ButtonIcon';
+import TranslationBox from '@/components/TranslationBox';
+import {IconArrowLeftRightLine, IconSendLine} from '@/components/icons';
+import gemini from '@/services/gemini';
+import languages from '@/libs/languages.json';
 
-export default function Home() {
-	const [sentance, setSentance] = useState("");
-	const [result, setResult] = useState("");
-	const [langOrigin, setLangOrigin] = useState("Indonesian");
-	const [langdestination, setLangdestination] = useState("English US");
-	const [loading, setLoading] = useState(false);
+export default function Page() {
+    const [isLoaded, setIsLoaded] = useState(true);
+    const [translate, setTranslate] = useState("");
+    const {sentence, setSentence} = useContext(SentenceContext);
+    const [{source, setSource}, {target, setTarget}] = useContext(LanguageContext);
 
-	async function translate() {
-		if (sentance == "") {
-			return;
-		}
-		setLoading(true);
-		setResult(await gemini(sentance, langOrigin, langdestination));
-		setLoading(false);
-	};
+    const handleTranslate = async () => {
+        try {
+            setIsLoaded(false);
+            let result = await gemini(sentence, source, target);
+            setTranslate(result);
+        } 
+        catch (error) {
+            console.log(error);
+        } 
+        finally {
+            setIsLoaded(true);
+        }
+    }
 
-	function swap() {
-		let langTemp = langOrigin;
-		let resultTemp = result;
-		setLangOrigin(langdestination);
-		setLangdestination(langTemp);
-		setResult(sentance);
-		setSentance(resultTemp);
-	}
+    const handleSwapLanguage = () => {
+        setSource((prevSource) => {
+            setTarget(prevSource);
+            return target;
+        })
+    }
 
-	function clear() {
-		setSentance("");
-		setResult("");
-	}
-
-	return (
-		<main className='max-w-5xl mx-4 md:mx-auto py-10'>
-			<div className='border'>
-				<div className='flex justify-evenly bg-white px-2 py-2 border-b'>
-					<select 
-						className="select-lang" 
-						value={langOrigin}
-						onChange={(e) => setLangOrigin(e.target.value)}
-					>
-						{language.map((item) => 
-							<option 
-								key={item.code} 
-								value={item.language}
-								disabled={item.language == langdestination && true}
-							>
-								{item.language}
-							</option>
-						)}
-					</select>
-					<button className="btn-swap" onClick={swap}>
-						Ubah
-					</button>
-					<select 
-						className="select-lang" 
-						value={langdestination}
-						onChange={(e) => setLangdestination(e.target.value)}
-					>
-						{language.map((item) => 
-							<option 
-								key={item.code} 
-								value={item.language}
-								disabled={item.language == langOrigin && true}
-							>
-								{item.language}
-							</option>
-						)}
-					</select>
-				</div>
-				<div className='flex justify-evenly flex-col md:flex-row'>
-					<div className='flex-1 flex bg-white relative border-r'>
-						<Textarea 
-							className='textarea' 
-							placeholder='Type to translate' 
-							rows={10}
-							value={sentance}
-							onChange={(e) => setSentance(e.target.value)} 
-						/>
-						<div className='flex flex-col gap-y-3 pt-4 pr-4'>
-							<button 
-								className="btn-translate" 
-								onClick={translate}
-								disabled={sentance == "" && true}
-							>
-								<i className="ri-send-plane-2-line text-white"></i>
-							</button>
-							{sentance != "" && 
-								<button className="btn-clear" onClick={clear}>
-									<i className="ri-close-large-line ri-lg"></i>
-								</button>
-							}
-						</div>
-					</div>
-					{loading ? 
-						<div className='flex-1 bg-neutral-100'>
-							<div className='p-4 animate-pulse space-y-2'>
-								<div className='h-4 bg-neutral-300 max-w-full'></div>
-								<div className='h-4 bg-neutral-300 max-w-64'></div>
-								<div className='h-4 bg-neutral-300 max-w-32'></div>
-							</div>
-						</div> :
-						<div className='flex-1 bg-neutral-100'>
-							<Textarea 
-								className='textarea' 
-								placeholder='Translation' 
-								rows={10}
-								value={result}
-								readOnly={true}
-							/>
-						</div>
-					}
-				</div>
-			</div>
-		</main>
-	);
+    return (
+        <main className='max-w-5xl mx-4 md:mx-auto py-10 space-y-6'>
+            <CardWrapper className="flex-row justify-between">
+                <SelectLang
+                    languages={languages} 
+                    languageSelected={source} 
+                    setLanguageSelected={setSource}
+                    languageDisable={target}
+                />
+                <ButtonIcon onPress={handleSwapLanguage}>
+                    <IconArrowLeftRightLine className='h-4 w-4' />
+                </ButtonIcon>
+                <SelectLang 
+                    languages={languages} 
+                    languageSelected={target} 
+                    setLanguageSelected={setTarget} 
+                    languageDisable={source} 
+                />
+            </CardWrapper>
+            <CardWrapper className="flex-row justify-between gap-x-4">
+                <TranslationBox placeholder="Type to translate" setValue={setSentence}>
+                    {sentence && (
+                        <ButtonIcon onPress={handleTranslate} size="sm" className="absolute right-2 top-2">
+                            <IconSendLine className='h-4 w-4'/>
+                        </ButtonIcon>
+                    )}
+                </TranslationBox>
+                <Skeleton className='w-full' isLoaded={isLoaded}>
+                    <TranslationBox placeholder="Translation" value={translate} isReadOnly={true} />
+                </Skeleton>
+            </CardWrapper>
+        </main>
+    )
 }
