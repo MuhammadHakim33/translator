@@ -1,6 +1,6 @@
 "use client";
 
-import {useState, useContext} from 'react';
+import {useContext} from 'react';
 import {Skeleton} from "@heroui/skeleton";
 import {SentenceContext} from '@/contexts/sentenceContext';
 import {LanguageContext} from '@/contexts/languageContext';
@@ -15,14 +15,7 @@ import useTranslation from '@/hooks/useTranslation';
 export default function Page() {
     const {sentence, setSentence} = useContext(SentenceContext);
     const [{source, setSource}, {target, setTarget}] = useContext(LanguageContext);
-    const {isLoaded, translate, handleTranslate} = useTranslation();
-
-    const handleSwapLanguage = () => {
-        setSource((prevSource) => {
-            setTarget(prevSource);
-            return target;
-        });
-    }
+    const {isLoaded, translate, handleSwapLanguage, handleTranslate} = useTranslation();
 
     return (
         <main className='max-w-5xl mx-4 md:mx-auto py-10 space-y-6'>
@@ -44,7 +37,7 @@ export default function Page() {
                 />
             </CardWrapper>
             <CardWrapper className="flex-row justify-between gap-x-4">
-                <TranslationBox placeholder="Type to translate" setValue={setSentence}>
+                <TranslationBox placeholder="Type to translate" value={sentence} setValue={setSentence}>
                     {sentence && (
                         <ButtonIcon onPress={handleTranslate} size="sm" className="absolute right-2 top-2">
                             <IconSendLine className='h-4 w-4'/>

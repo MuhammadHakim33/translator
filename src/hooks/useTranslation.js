@@ -6,8 +6,8 @@ import {LanguageContext} from '@/contexts/languageContext';
 export default function useTranslation() {
     const [isLoaded, setIsLoaded] = useState(true);
     const [translate, setTranslate] = useState("");
-    const {sentence} = useContext(SentenceContext);
-    const [{source}, {target}] = useContext(LanguageContext);
+    const {sentence, setSentence} = useContext(SentenceContext);
+    const [{source, setSource}, {target, setTarget}] = useContext(LanguageContext);
   
     const handleTranslate = async () => {
         try {
@@ -20,6 +20,16 @@ export default function useTranslation() {
             setIsLoaded(true);
         }
     };
+
+    const handleSwapLanguage = () => {
+        const previousSource = source;
+        setSource(target);
+        setTarget(previousSource);
+
+        const previousSentence = sentence;
+        setSentence(translate);
+        setTranslate(previousSentence);
+    }
   
-    return {isLoaded, translate, handleTranslate};
+    return {isLoaded, translate, handleSwapLanguage, handleTranslate};
 }
