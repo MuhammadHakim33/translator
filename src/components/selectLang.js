@@ -12,17 +12,22 @@ function SelectLang({
 
     return (
         <Select
+            radius="none"
+            size="sm"
             aria-label="Select"
             disableSelectorIconRotation
             items={languages}
-            className="max-w-xs"
+            classNames={{
+                value:"text-center",
+                popoverContent:"rounded-none",
+            }}
             labelPlacement="outside"
             selectorIcon={<IconSelectorLine />}
             selectedKeys={[languageSelected]}
             onChange={handleLanguageSelected}
             disabledKeys={[languageDisable]}
         >
-            {(items) => <SelectItem key={items.language}>{items.language}</SelectItem>}
+            {(items) => <SelectItem className="rounded-none" key={items.language}>{items.language}</SelectItem>}
         </Select>
     )
 }

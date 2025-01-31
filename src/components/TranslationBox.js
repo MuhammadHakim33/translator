@@ -8,7 +8,7 @@ function TranslationBox({children, placeholder, isReadOnly=false, setValue, valu
                     input: `h-[236px] py-2 ${isReadOnly ? '' : 'pr-14'}`,
                 }} 
                 isReadOnly={isReadOnly}
-                radius={"sm"}
+                radius="none"
                 minRows={11} 
                 maxRows={50} 
                 placeholder={placeholder}
