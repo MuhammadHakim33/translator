@@ -26,15 +26,15 @@ export default function Page() {
     } = useTranslation();
 
     return (
-        <main className='max-w-5xl mx-4 md:mx-auto py-10 space-y-6'>
-            <CardWrapper className="flex-row justify-between">
+        <main className='max-w-5xl md:mx-auto py-10 px-4 space-y-6'>
+            <CardWrapper className="flex-row justify-between items-center gap-x-3">
                 <SelectLang
                     languages={languages} 
                     languageSelected={source} 
                     setLanguageSelected={setSource}
                     languageDisable={target}
                 />
-                <ButtonIcon onPress={handleSwapLanguage}>
+                <ButtonIcon size="sm" onPress={handleSwapLanguage}>
                     <IconArrowLeftRightLine className='h-4 w-4' />
                 </ButtonIcon>
                 <SelectLang 
@@ -45,7 +45,7 @@ export default function Page() {
                 />
             </CardWrapper>
 
-            <CardWrapper className="flex-row justify-between gap-x-4">
+            <CardWrapper className="md:flex-row justify-between gap-4">
                 <TranslationBox placeholder="Type to translate" value={sentence} setValue={setSentence}>
                     {sentence && (
                         <ButtonIcon onPress={handleTranslate} size="sm" className="absolute right-2 top-2">
