@@ -33,6 +33,11 @@ export default function useTranslation() {
         setSentence(translate);
         setTranslate(previousSentence);
     }
+
+    const handleClear = () => {
+        setSentence("");
+        setTranslate("");
+    }
   
-    return {isLoaded, isError, setIsError, translate, handleSwapLanguage, handleTranslate};
+    return {isLoaded, isError, setIsError, translate, handleSwapLanguage, handleTranslate, handleClear};
 }

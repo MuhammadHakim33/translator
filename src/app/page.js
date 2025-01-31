@@ -9,7 +9,7 @@ import CardWrapper from '@/components/CardWrapper';
 import SelectLang from '@/components/SelectLang';
 import ButtonIcon from '@/components/ButtonIcon';
 import TranslationBox from '@/components/TranslationBox';
-import {IconArrowLeftRightLine, IconSendLine} from '@/components/icons';
+import {IconArrowLeftRightLine, IconSendLine, IconCloseLine} from '@/components/icons';
 import languages from '@/libs/languages.json';
 import useTranslation from '@/hooks/useTranslation';
 
@@ -22,7 +22,8 @@ export default function Page() {
         setIsError, 
         translate, 
         handleSwapLanguage, 
-        handleTranslate
+        handleTranslate,
+        handleClear
     } = useTranslation();
 
     return (
@@ -48,9 +49,15 @@ export default function Page() {
             <CardWrapper className="md:flex-row justify-between gap-4">
                 <TranslationBox placeholder="Type to translate" value={sentence} setValue={setSentence}>
                     {sentence && (
-                        <ButtonIcon onPress={handleTranslate} size="sm" className="absolute right-2 top-2">
-                            <IconSendLine className='h-4 w-4'/>
-                        </ButtonIcon>
+                        <div className="flex flex-col gap-y-2 absolute right-2 top-2">
+                            <ButtonIcon onPress={handleTranslate} size="sm" className="">
+                                <IconSendLine className='h-4 w-4'/>
+                            </ButtonIcon>
+
+                            <ButtonIcon onPress={handleClear} size="sm" className="">
+                                <IconCloseLine className='h-4 w-4'/>
+                            </ButtonIcon>
+                        </div>
                     )}
                 </TranslationBox>
                 <Skeleton className='w-full' isLoaded={isLoaded}>
