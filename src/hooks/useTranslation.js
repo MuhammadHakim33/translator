@@ -1,5 +1,7 @@
 import {useState, useContext} from 'react';
+import {NextResponse} from 'next/server'
 import gemini from '@/services/gemini';
+import {handleRateLimit} from '@/libs/rateLimit';
 import {SentenceContext} from '@/contexts/sentenceContext';
 import {LanguageContext} from '@/contexts/languageContext';
 
@@ -11,14 +13,23 @@ export default function useTranslation() {
     const [{source, setSource}, {target, setTarget}] = useContext(LanguageContext);
   
     const handleTranslate = async () => {
+        const {allowed, cooldown} = await handleRateLimit();
+
+        if (!allowed) {
+            // return NextResponse.json(
+            //     {error: "Unable to process at this time", timelimit},
+            //     {status: 429}
+            // );
+            alert("Unable to process at this time, wait " + cooldown + "s");
+            return;
+        }
+        
         try {
             setIsLoaded(false);
             const response = await gemini(sentence, source, target);
             setTranslate(response);
-            // console.log(response);
         } catch (error) {
             setIsError(true)
-            // console.error(error);
         } finally {
             setIsLoaded(true);
         }
@@ -39,5 +50,13 @@ export default function useTranslation() {
         setTranslate("");
     }
   
-    return {isLoaded, isError, setIsError, translate, handleSwapLanguage, handleTranslate, handleClear};
+    return {
+        isLoaded, 
+        isError, 
+        setIsError, 
+        translate, 
+        handleSwapLanguage, 
+        handleTranslate, 
+        handleClear
+    };
 }
