@@ -1,13 +1,14 @@
-import {SpeedInsights} from '@vercel/speed-insights/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import "../styles/globals.css";
-import {Providers} from "./providers";
+import { Providers } from "./providers";
+import Script from 'next/script'; 
 
 export const metadata = {
 	title: "Translator",
 	description: "AI Translator",
 };
 
-export default function RootLayout({children}) {
+export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body className='min-h-screen bg-neutral-50'>
@@ -16,21 +17,19 @@ export default function RootLayout({children}) {
 				</Providers>
 				<SpeedInsights />
 				
-				{/* 2. Ganti tag script HTML dengan komponen Script dari Next.js */}
-				<script 
+				<Script 
 					src="https://www.googletagmanager.com/gtag/js?id=AW-17968986140" 
 					strategy="afterInteractive" 
 				/>
 				
-				{/* 3. Bungkus kode javascript menggunakan tanda backtick (`) */}
-				<script id="google-analytics" strategy="afterInteractive">
+				<Script id="google-analytics" strategy="afterInteractive">
 					{`
 						window.dataLayer = window.dataLayer || [];
 						function gtag(){dataLayer.push(arguments);}
 						gtag('js', new Date());
 						gtag('config', 'AW-17968986140');
 					`}
-				</script>
+				</Script>
 			</body>
 		</html>
 	);
