@@ -17,20 +17,20 @@ export default function RootLayout({children}) {
 				<SpeedInsights />
 				
 				{/* 2. Ganti tag script HTML dengan komponen Script dari Next.js */}
-				<Script 
+				<script 
 					src="https://www.googletagmanager.com/gtag/js?id=AW-17968986140" 
 					strategy="afterInteractive" 
 				/>
 				
 				{/* 3. Bungkus kode javascript menggunakan tanda backtick (`) */}
-				<Script id="google-analytics" strategy="afterInteractive">
+				<script id="google-analytics" strategy="afterInteractive">
 					{`
 						window.dataLayer = window.dataLayer || [];
 						function gtag(){dataLayer.push(arguments);}
 						gtag('js', new Date());
 						gtag('config', 'AW-17968986140');
 					`}
-				</Script>
+				</script>
 			</body>
 		</html>
 	);
